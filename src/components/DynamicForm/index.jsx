@@ -11,13 +11,9 @@ const DynamicForm = () =>{
     const [isLabelEmpty , setLabelStatus] = useState(true)
     const [isOptionEmpty, setOptionEmptyStatus] = useState(true)
     const [isSubmitted, setSubmitStatus] = useState(false)
-
-     
-
-     
-
+    const [onsubmitted, setSubmitted] = useState(false)
+    const [radio, setRadio] = useState('')
     
-
     const addToForm = () =>{
         if(labelText === ''){
             setLabelStatus(false)
@@ -31,7 +27,7 @@ const DynamicForm = () =>{
 
         if(labelText!==''){
             const id = v4()
-            const newData = {id, label: labelText, type: inputType, options: [...options]}
+            const newData = {id, label: labelText, type: inputType, value:'', options: [...options]}
             
             setForm(prev=>([...prev, newData]))
             setLabelText('')   
@@ -44,8 +40,17 @@ const DynamicForm = () =>{
     }
 
     const onFormSubmit = (event) =>{
-        event.preventDefault()        
+        event.preventDefault()
+        setSubmitted(true)
+
+        const timer = setInterval(()=>{
+            setSubmitted(false)
+        }, 3000)
+
+        
+
         console.log(form)
+        console.log(radio)
         setForm([])
         setSubmitStatus(false)
         setLabelStatus(true)   
@@ -129,7 +134,7 @@ const DynamicForm = () =>{
                         (eachItem.type==='radio' || eachItem.type==='checkbox') &&
                         <>
                             <label> {eachItem.label}</label> <br/>
-                            {eachItem.options.map(eachValue=><> <input required name={eachItem.label} id={eachValue} type={eachItem.type}/> <label htmlFor={eachValue}> {eachValue} </label>  </>)} <br/>
+                            {eachItem.options.map(eachValue=><> <input value={radio} name={eachItem.label} id={eachItem.label} type={eachItem.type}/> <label htmlFor={eachValue}> {eachValue} </label>  </>)} <br/>
                         </>
                     }
                     {
@@ -142,10 +147,13 @@ const DynamicForm = () =>{
                             
                         </>
 
-                    }            
+                    } 
+                           
                     
                 </div>)}  
-            {isSubmitted && <input type='submit' value='Submit'/>   }
+            {isSubmitted && <input type='submit' value='Submit'/> }
+            {onsubmitted && <p className='submitted'> Check console for form data </p> } 
+            
               
                     
             </form>

@@ -42,3 +42,9 @@ input[type='submit']{
 .err-msg{
     color: red;
 }
+
+.submitted{
+    color: rgb(237, 40, 40);
+    font-size: 20px;
+    font-weight: 600;
+}
