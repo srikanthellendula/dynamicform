@@ -1,0 +1,44 @@
+*{
+    margin: 10px;
+}
+button{
+    background-color: rgb(107, 107, 189);
+    border: 0px solid rgb(136, 136, 226) ;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+}
+
+input[type="text"]{
+    padding: 10px;
+    width: 20vw;
+}
+
+select{
+    padding: 10px;
+    margin: 10px;
+    font-size: 15px;
+    width: 20vw;
+}
+
+input[type='submit']{
+    background-color: rgb(117, 117, 237);
+    border: 0px solid rgb(124, 124, 240) ;
+    padding: 10px;
+    border-radius: 5px;
+    color: white;
+
+}
+
+.main-cont{
+    display: flex;
+    flex-direction: row;
+}
+
+.form{
+    margin: 5%;
+}
+
+.err-msg{
+    color: red;
+}
