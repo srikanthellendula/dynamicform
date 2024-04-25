@@ -5,12 +5,14 @@ import './index.css'
 const DynamicForm = () =>{
     const [inputType, setInputType] = useState('none')
     const [labelText, setLabelText] = useState('')
-    const [formData, setFormData] = useState({})
     const [form, setForm] = useState([])
     const [optionVal, setOptionVal] = useState('')
     const [options, setOptions] = useState([])
     const [isLabelEmpty , setLabelStatus] = useState(true) 
     const [isSubmitted, setSubmitStatus] = useState(false)
+
+    const [userText, setUserText] = useState('')
+
      
 
     
@@ -28,31 +30,32 @@ const DynamicForm = () =>{
 
         if(labelText!==''){
             const id = v4()
-            setFormData({id, label: labelText, type: inputType, options: [...options]})
-            setForm(prev=>([...prev, formData]))
+            const newData = {id, label: labelText, type: inputType, options: [...options]}
+            
+            setForm(prev=>([...prev, newData]))
             setLabelText('')   
             setOptions([])
             setSubmitStatus(true)
+            setInputType('none')   
         } 
               
     }
 
     const onFormSubmit = (event) =>{
         event.preventDefault()
+        console.log(userText)
         console.log(form)
         setForm([])
         setSubmitStatus(false)
-         
+        setInputType('none')      
 
     }
 
-   const AddingOPtions = () => {
-
-    if (optionVal !== ''){
-        setOptions([...options, optionVal]);
-    setOptionVal('')
-    }
-    
+    const AddingOPtions = () => {
+            if (optionVal !== ''){
+                setOptions([...options, optionVal]);
+                setOptionVal('')
+            }    
    }
  
     return(
@@ -104,21 +107,21 @@ const DynamicForm = () =>{
                     {form.map(eachItem=><div  key={v4()}> 
                     {  
                         (eachItem.type === 'text' || eachItem.type === 'number') &&
-                        <> <label> {eachItem.label} </label> <br/>
-                        <input required type={eachItem.type}/> <br/> </>
+                        <> <label htmlFor={eachItem.label} > {eachItem.label} </label> <br/>
+                        <input id={eachItem.label} required type={eachItem.type} /> <br/> </>
                     }
 
                     {
                         (eachItem.type === 'textarea') &&
                         <> <label> {eachItem.label} </label> <br/>
-                         <textarea rows='8' cols='50' >  </textarea> <br/> </>
+                         <textarea rows='8' cols='50' required>  </textarea> <br/> </>
                     } 
                     
                     {
                         (eachItem.type==='radio' || eachItem.type==='checkbox') &&
                         <>
                             <label> {eachItem.label}</label> <br/>
-                            {eachItem.options.map(eachValue=><> <input onChange={(event)=>{setFinalValue(event.target.value)}} name={eachItem.label} id={eachValue} type={eachItem.type}/> <label htmlFor={eachValue}> {eachValue} </label>  </>)} <br/>
+                            {eachItem.options.map(eachValue=><> <input required onChange={(event)=>{setFinalValue(event.target.value)}} name={eachItem.label} id={eachValue} type={eachItem.type}/> <label htmlFor={eachValue}> {eachValue} </label>  </>)} <br/>
                         </>
                     }
                     {
